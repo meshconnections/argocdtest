@@ -1,0 +1,90 @@
+loki:
+  loki:
+    auth_enabled: false
+
+    limits_config:
+      retention_period: 744h
+
+    storage:
+      type: gcs
+      bucketNames:
+        chunks: safi-loki-brave
+        ruler: safi-loki-brave
+        admin: safi-loki-brave
+    
+    compactor:
+      compaction_interval: 10m
+      retention_delete_delay: 2h
+      retention_delete_worker_count: 150
+      retention_enabled: true
+      shared_store: gcs
+      working_directory: /var/loki/retention
+
+    rulerConfig:
+      alertmanager_url: http://kube-prometheus-alertmanager.monitoring.svc:9093
+      external_url: https://alertmanager.monitoring.brave.safibank.online
+      enable_api: true
+      enable_alertmanager_v2: true
+      ring:
+        kvstore:
+          store: memberlist
+      rule_path: /tmp/loki
+      storage:
+        type: local                                                   
+        local:
+          directory: /etc/loki/rules
+
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: safi-loki-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+
+  test:
+    enabled: false
+
+  monitoring:
+    dashboards:
+      labels:
+        grafana_dashboard: 'true'
+    selfMonitoring:
+      enabled: false
+      grafanaAgent:
+        installOperator: false
+      lokiCanary:
+        enabled: false
+
+  write:
+    persistence:
+      size: 1Gi
+      storageClass: standard
+
+  read:
+    persistence:
+      size: 10Gi
+      storageClass: standard
+    extraVolumeMounts:
+    - mountPath: /etc/loki/rules
+      name: rules
+    extraVolumes:
+    - configMap:
+        name: loki-brave-rules
+      name: rules
+
+  gateway:
+    replicas: 2
+    verboseLogging: false
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: zerossl-dns
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        kubernetes.io/ingress.class: traefik-internal
+      hosts:
+        - host: loki.monitoring.brave.safibank.online
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - secretName: loki.monitoring.brave.safibank.online-tls
+          hosts:
+            - loki.monitoring.brave.safibank.online

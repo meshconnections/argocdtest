@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki-brave
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .  
+spec:
+  project: env-brave-monitoring
+  source:
+    repoURL: "https://github.com/SafiBank/SaFiMono.git"
+    path: devops/argocd/environments/brave/monitoring/loki
+    targetRevision: HEAD
+  destination:
+    server: https://172.21.80.5:8081
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: apps
+      jsonPointers:
+        - /spec/persistentVolumeClaimRetentionPolicy
+      kind: StatefulSet
+      name: loki-read

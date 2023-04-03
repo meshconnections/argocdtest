@@ -1,0 +1,55 @@
+thanos:
+  objstoreConfig: |-
+    type: GCS
+    config:
+      bucket: safi-thanos-brave
+  query:
+    stores:
+      # safi-cicd
+      - prom.cicd.safibank.online:80
+      # safi-brave-apps
+      - prom.apps.brave.safibank.online:80
+      # safi-brave-tyk
+      - prom.tyk.brave.safibank.online:80
+      # safi-brave-hcv
+      - prom.hcvault.brave.safibank.online:80
+      # safi-brave-vpn
+      - prom.vpn.brave.safibank.online:80
+      # safi-brave-tms
+      - prom.tms.brave.safibank.online:80
+      # safi-brave-monitoring
+      - kube-prometheus-prometheus-thanos.monitoring.svc:10901
+    replicaLabel: [prometheus_replica]
+    ingress:
+      enabled: true
+      hostname: thanos.monitoring.brave.safibank.online
+      annotations:
+        cert-manager.io/cluster-issuer: zerossl-dns
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        kubernetes.io/ingress.class: traefik-internal
+      tls: true
+  bucketweb:
+    enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+  compactor:
+    enabled: true
+    retentionResolutionRaw: 7d
+    retentionResolution5m: 30d
+    retentionResolution1h: 90d
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+    persistence:
+      size: 30Gi
+  storegateway:
+    enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
