@@ -1,8 +1,8 @@
 thanos:
-  # objstoreConfig: |-
-  #   type: GCS
-  #   config:
-  #     bucket: synthos-thanos
+  objstoreConfig: |-
+    type: GCS
+    config:
+      bucket: synthos-thanos
 
   query:
     stores:
@@ -25,22 +25,22 @@ thanos:
     #   annotations:
     #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
 
-  compactor:
-    enabled: true
-    retentionResolutionRaw: 7d
-    retentionResolution5m: 30d
-    retentionResolution1h: 90d
-    # serviceAccount:
-    #   annotations:
-    #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
-    persistence:
-      size: 30Gi
+  # compactor:
+  #   enabled: true
+  #   retentionResolutionRaw: 7d
+  #   retentionResolution5m: 30d
+  #   retentionResolution1h: 90d
+  #   # serviceAccount:
+  #   #   annotations:
+  #   #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
+  #   persistence:
+  #     size: 30Gi
 
-  storegateway:
-    enabled: true
-    # serviceAccount:
-    #   annotations:
-    #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
+  # storegateway:
+  #   enabled: true
+  #   # serviceAccount:
+  #   #   annotations:
+  #   #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
 
   metrics:
     enabled: true
