@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-brave
+  name: grafana
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
 spec:
-  project: env-brave-monitoring
+  project: observability
   source:
-    repoURL: "https://github.com/SafiBank/SaFiMono.git"
-    path: devops/argocd/environments/brave/monitoring/grafana
+    repoURL: repoURL: 'https://github.com/meshconnections/argocdtest.git'
+    path: devops/monitoring/grafana
     targetRevision: HEAD
-    plugin:
-      name: helm-argocd-vault-replacer
   destination:
-    server: https://172.21.80.5:8081
+    server: 'https://kubernetes.default.svc'
     namespace: monitoring
   syncPolicy:
     automated:
