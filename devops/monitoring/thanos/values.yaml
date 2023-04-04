@@ -5,11 +5,9 @@ thanos:
       bucket: synthos-thanos
   query:
     stores:
-      - name: devops-prometheus-vm
-        endpoint: 34.123.80.93:9090
-        # basic_auth:
-        #   username: <username>
-        #   password: <password>
+      # # devops-prometheus-vm
+      - 34.123.80.93:9090
+
       # # stage
       # - prom.exammple.com:80
       # # preprod
