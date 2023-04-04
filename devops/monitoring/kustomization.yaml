@@ -6,4 +6,4 @@ resources:
 - base/grafana.yaml
 # - base/loki.yaml
 # - base/tempo.yaml
-- base/thanos.yaml
+# - base/thanos.yaml
