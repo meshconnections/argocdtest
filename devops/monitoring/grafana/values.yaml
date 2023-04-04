@@ -1,28 +1,18 @@
 grafana:
-  serviceAccount:
-    annotations:
-      iam.gke.io/gcp-service-account: grafana-bigquery@acquired-badge-348405.iam.gserviceaccount.com
+  # serviceAccount:
+  #   annotations:
+  #     iam.gke.io/gcp-service-account: sa-bigquery@<project>gserviceaccount.com
+
+# Whether to create test-related resources (default - true)
   testFramework:
     enabled: false
 
-  ingress:
-    enabled: true
-    hosts:
-      - grafana.monitoring.brave.safibank.online
-    annotations:
-      cert-manager.io/cluster-issuer: zerossl-dns
-      traefik.ingress.kubernetes.io/router.tls: "true"
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      kubernetes.io/ingress.class: traefik-internal
-    tls:
-      - secretName: grafana.monitoring.brave.safibank.online-tls
-        hosts:
-          - grafana.monitoring.brave.safibank.online
   resources:
     limits:
       cpu: 100m
       memory: 128Mi
 
+# busybox init container
   initChownData:
     resources:
       limits:
@@ -32,21 +22,44 @@ grafana:
         cpu: 100m
         memory: 128Mi
 
-  adminPassword: <secret:secret/data/brave/monitoring/grafana~password>
+  adminUser: admin
+  adminPassword: D3V0P$monitoring
 
+# # Use an existing secret for the admin user.
+#   admin:
+#     ## Name of the secret. Can be templated.
+#     existingSecret: ""
+#     userKey: admin-user
+#     passwordKey: admin-password
+
+
+  # ingress:
+  #   enabled: true
+  #   hosts:
+  #     - grafana.example.com
+  #   annotations:
+  #     cert-manager.io/cluster-issuer: zerossl-dns
+  #     traefik.ingress.kubernetes.io/router.tls: "true"
+  #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  #     kubernetes.io/ingress.class: traefik-internal
+  #   tls:
+  #     - secretName: grafana.monitoring.brave.safibank.online-tls
+  #       hosts:
+  #         - grafana.monitoring.brave.safibank.online
+  
   datasources:
     datasources.yaml:
       apiVersion: 1
       datasources:
-        - name: Prometheus
+        - name: Prometheus-Thanos
           type: prometheus
-          url: http://thanos-brave-query.monitoring.svc:9090
+          url: http://thanos.monitoring.svc:9090
           access: proxy
           isDefault: true
         - name: Loki
           type: loki
           access: proxy
-          url: http://loki-gateway.monitoring.svc:80
+          url: http://loki.monitoring.svc:80
           jsonData:
             maxLines: 1000
             derivedFields:
@@ -57,42 +70,19 @@ grafana:
         - name: Tempo
           type: tempo
           access: proxy
-          url: http://tempo-brave-query-frontend.observability.svc:3100
+          url: http://tempo.monitoring.svc:3100
           basicAuth: false
           jsonData:
             serviceMap:
               datasourceUid: Prometheus
             nodeGraph:
               enabled: true
-        - name: BigQuery DS
-          type: grafana-bigquery-datasource
-          editable: true
-          enabled: true
-          jsonData:
-            defaultProject: acquired-badge-348405
-            authenticationType: gce
 
-  plugins:
-    - grafana-bigquery-datasource
-    - grafana-piechart-panel
   grafana.ini:
     server:
-      root_url: https://grafana.monitoring.brave.safibank.online
-    auth.okta:
-      name: Okta
-      icon: okta
-      enabled: true
-      allow_sign_up: true
-      client_id: <secret:secret/data/brave/monitoring/grafana/okta~client_id>
-      client_secret: <secret:secret/data/brave/monitoring/grafana/okta~client_secret>
-      scopes: openid profile email groups
-      auth_url: https://safibank.okta.com/oauth2/v1/authorize
-      token_url: https://safibank.okta.com/oauth2/v1/token
-      api_url: https://safibank.okta.com/oauth2/v1/userinfo
-      allowed_domains:
-      allowed_groups:
-      role_attribute_path: contains(groups[*], 'grafana-brave-admin') && 'Admin' || contains(groups[*], 'grafana-brave-editor') && 'Editor' || contains(groups[*], 'grafana-brave-viewer') && 'Viewer'
+      root_url: https://grafana.monitoring.example.com
 
+# Enables the cluster wide search for dashboards and adds/updates/deletes them in grafana
   sidecar:
     resources:
       limits:
