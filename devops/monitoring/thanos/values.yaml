@@ -1,32 +1,26 @@
 thanos:
-  objstoreConfig: |-
-    type: GCS
-    config:
-      bucket: synthos-thanos
+  # objstoreConfig: |-
+  #   type: GCS
+  #   config:
+  #     bucket: synthos-thanos
+
   query:
     stores:
-      # # devops-prometheus-vm
-      - 34.123.80.93:9090
-
-      # # stage
-      # - prom.exammple.com:80
-      # # preprod
-      # - prom.exammple.com:80
-
+      # safi-cicd
+      - prom.cicd.safibank.online:80
+    ingress:
+      enabled: true
+      hostname: thanos.monitoring.brave.safibank.online
+      annotations:
+        cert-manager.io/cluster-issuer: zerossl-dns
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        kubernetes.io/ingress.class: traefik-internal
+      tls: true
     replicaLabel: [prometheus_replica]
 
-    # ingress:
-    #   enabled: true
-    #   hostname: thanos.monitoring.example.com
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: zerossl-dns
-    #     traefik.ingress.kubernetes.io/router.tls: "true"
-    #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    #     kubernetes.io/ingress.class: traefik-internal
-    #   tls: true
-
-  bucketweb:
-    enabled: true
+  # bucketweb:
+  #   enabled: true
     # serviceAccount:
     #   annotations:
     #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
@@ -36,11 +30,11 @@ thanos:
     retentionResolutionRaw: 7d
     retentionResolution5m: 30d
     retentionResolution1h: 90d
-    persistence:
-      size: 30Gi
     # serviceAccount:
     #   annotations:
     #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
+    persistence:
+      size: 30Gi
 
   storegateway:
     enabled: true
