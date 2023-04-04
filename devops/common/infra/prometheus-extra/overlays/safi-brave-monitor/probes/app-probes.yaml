@@ -1,0 +1,60 @@
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: apps-probes
+spec:
+  module: http_2xx
+  prober:
+    url: kube-prometheus-blackbox-exporter.monitoring.svc.cluster.local:19115
+  targets:
+    staticConfig:
+      static:
+      - https://bofe.apps.brave.safibank.online/health
+      - https://account-manager.apps.brave.safibank.online/health
+      - https://advanceai-gateway.apps.brave.safibank.online/health
+      - https://audit-log-manager.apps.brave.safibank.online/health
+      - https://backoffice-manager.apps.brave.safibank.online/health
+      - https://card-aggregator.apps.brave.safibank.online/health
+      - https://card-manager.apps.brave.safibank.online/health
+      - https://card-transaction-processor-manager.apps.brave.safibank.online/health
+      - https://communication-history-manager.apps.brave.safibank.online/health
+      - https://customer-manager.apps.brave.safibank.online/health
+      - https://digipay-gateway.apps.brave.safibank.online/health
+      - https://ecpay-gateway.apps.brave.safibank.online/health
+      - https://engagement-manager.apps.brave.safibank.online/health
+      - https://euronet-gateway.apps.brave.safibank.online/health
+      - https://fee-manager.apps.brave.safibank.online/health
+      - https://genesys-gateway.apps.brave.safibank.online/health
+      - https://genesys-recording-migrator.apps.brave.safibank.online/health
+      - https://googleapi-gateway.apps.brave.safibank.online/health
+      - https://iam-manager.apps.brave.safibank.online/health      
+      - https://infobip-email-gateway.apps.brave.safibank.online/health
+      - https://infobip-sms-gateway.apps.brave.safibank.online/health
+      - https://infobip-viber-gateway.apps.brave.safibank.online/health
+      - https://jira-gateway.apps.brave.safibank.online/health
+      - https://loan-manager.apps.brave.safibank.online/health
+      - https://macrokiosk-email-gateway.apps.brave.safibank.online/health
+      - https://macrokiosk-sms-gateway.apps.brave.safibank.online/health
+      - https://meiro-gateway.apps.brave.safibank.online/health
+      - https://merchants-manager.apps.brave.safibank.online/health
+      - https://netsuite-gateway.apps.brave.safibank.online/health
+      - https://ninjavan-gateway.apps.brave.safibank.online/health
+      - https://output-delivery-status-manager.apps.brave.safibank.online/health
+      - https://output-manager.apps.brave.safibank.online/health
+      - https://paynamics-gateway.apps.brave.safibank.online/health
+      - https://pdf-generator.apps.brave.safibank.online/health
+      - https://pesonet-gateway.apps.brave.safibank.online/health      
+      - https://pesonet-sandbox.apps.brave.safibank.online/health
+      - https://product-manager.apps.brave.safibank.online/health
+      - https://product-recommendation-manager.apps.brave.safibank.online/health
+      - https://push-notifications-gateway.apps.brave.safibank.online/health
+      - https://referral-manager.brave.safibank.online/health
+      - https://response-message-manager.apps.brave.safibank.online/health
+      - https://scheduled-transaction-manager.apps.brave.safibank.online/health
+      - https://slacker-manager.apps.brave.safibank.online/health
+      - https://statement-manager.apps.brave.safibank.online/health
+      - https://template-service.apps.brave.safibank.online/health
+      - https://ticket-manager.apps.brave.safibank.online/health
+      - https://transaction-categorization-manager.apps.brave.safibank.online/health
+      - https://transaction-history-manager.apps.brave.safibank.online/health
+      - https://transaction-processor-manager.apps.brave.safibank.online/health

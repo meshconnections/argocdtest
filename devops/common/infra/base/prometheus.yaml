@@ -1,0 +1,860 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prometheus
+spec:
+  generators:
+  - list:
+      elements:
+      - name: safi-cicd
+        server: https://kubernetes.default.svc
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-cicd"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.cicd.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-stage-apps
+        server: https://172.17.47.219:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 4096Mi
+                limits:
+                  cpu: 1024m
+                  memory: 6144Mi
+              externalLabels:
+                cluster: "safi-stage-apps"
+              persistence:
+                enabled: true
+                size: 8Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-stage@safi-env-stage-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: thanos.apps.stage.safibank.internal
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            node-exporter:
+              tolerations:
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "github_runner"
+                  effect: "NoSchedule"
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "euronet_gateway"
+                  effect: "NoSchedule"
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-stage-tyk
+        server: https://172.17.96.9:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-stage-tyk"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-stage@safi-env-stage-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: thanos.tyk.stage.safibank.internal
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-stage-monitor
+        server: https://172.17.80.8:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-stage-monitor"
+              enableFeatures:
+                - remote-write-receiver
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-stage@safi-env-stage-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            coreDns:
+              enabled: false
+      # - name: safi-stage-hcv
+      #   server: https://172.17.64.9:8081
+      #   values:
+      #     override: |
+      #       prometheus:
+      #         replicaCount: 2
+      #         resources:
+      #           requests:
+      #             cpu: 512m
+      #             memory: 1024Mi
+      #           limits:
+      #             cpu: 512m
+      #             memory: 2048Mi
+      #         externalLabels:
+      #           cluster: "safi-stage-hcv"
+      #         persistence:
+      #           enabled: true
+      #           size: 4Gi
+      #         serviceAccount:
+      #           annotations:
+      #             iam.gke.io/gcp-service-account: safi-thanos-gcs-stage@safi-env-stage-monitor.iam.gserviceaccount.com
+      #         retention: 12h
+      #         disableCompaction: true
+      #         thanos:
+      #           create: true
+      #           objectStorageConfig:
+      #             secretName: thanos-objstore-config
+      #             secretKey: thanos.yaml
+      #           service:
+      #             annotations:
+      #               traefik.ingress.kubernetes.io/service.serversscheme: h2c
+      #           ingress:
+      #             enabled: true
+      #             hostname: thanos.hcv.stage.safibank.internal
+      #             annotations:
+      #               kubernetes.io/ingress.class: traefik-internal
+      #       alertmanager:
+      #         externalConfig: true
+      #         persistence:
+      #           enabled: true
+      #           size: 1Gi
+      #       blackboxExporter:
+      #         enabled: false
+      #       coreDns:
+      #         enabled: false
+      - name: safi-stage-vpn
+        server: https://172.17.128.5:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-stage-vpn"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-stage@safi-env-stage-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: thanos.vpn.stage.safibank.internal
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-brave-applications
+        server: https://172.21.32.16:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 4096Mi
+                limits:
+                  cpu: 1024m
+                  memory: 6144Mi
+              externalLabels:
+                cluster: "safi-brave-applications"
+              persistence:
+                enabled: true
+                size: 8Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.apps.brave.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            node-exporter:
+              tolerations:
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "github_runner"
+                  effect: "NoSchedule"
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "euronet_gateway"
+                  effect: "NoSchedule"
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-brave-tyk
+        server: https://172.21.96.10:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-brave-tyk-a"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.tyk.brave.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-brave-monitor
+        server: https://172.21.80.5:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-brave-monitor"
+              enableFeatures:
+                - remote-write-receiver
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            coreDns:
+              enabled: false
+      - name: safi-brave-hcvault
+        server: https://172.21.64.9:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-brave-hcvault"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.hcvault.brave.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-brave-vpn
+        server: https://172.21.128.11:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-brave-vpn"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.vpn.brave.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-brave-tms
+        server: https://172.21.0.11:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-brave-tms"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-brave@safi-env-brave-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.tms.brave.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            exporters:
+              node-exporter:
+                enabled: false
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+
+
+      - name: safi-tangled-applications
+        server: https://172.22.32.14:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 4096Mi
+                limits:
+                  cpu: 1024m
+                  memory: 6144Mi
+              externalLabels:
+                cluster: "safi-tangled-applications"
+              persistence:
+                enabled: true
+                size: 8Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.apps.tangled.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            node-exporter:
+              tolerations:
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "github_runner"
+                  effect: "NoSchedule"
+                - key: "safi_nodegroup_class"
+                  operator: "Equal"
+                  value: "euronet_gateway"
+                  effect: "NoSchedule"
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-tangled-tyk-a
+        server: https://172.22.96.5:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-tangled-tyk-a"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.tyk.tangled.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-tangled-monitor
+        server: https://172.22.80.8:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-tangled-monitor"
+              enableFeatures:
+                - remote-write-receiver
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            coreDns:
+              enabled: false
+      - name: safi-tangled-hcvault
+        server: https://172.22.64.9:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-tangled-hcvault"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.hcvault.tangled.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-tangled-vpn
+        server: https://172.22.128.5:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-tangled-vpn"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.vpn.tangled.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+      - name: safi-tangled-tms
+        server: https://172.22.0.5:8081
+        values:
+          override: |
+            prometheus:
+              replicaCount: 2
+              resources:
+                requests:
+                  cpu: 512m
+                  memory: 1024Mi
+                limits:
+                  cpu: 1024m
+                  memory: 2048Mi
+              externalLabels:
+                cluster: "safi-tangled-tms"
+              persistence:
+                enabled: true
+                size: 4Gi
+              serviceAccount:
+                annotations:
+                  iam.gke.io/gcp-service-account: safi-thanos-gcs-tangled@safi-env-tangled-monitor.iam.gserviceaccount.com
+              retention: 12h
+              disableCompaction: true
+              thanos:
+                create: true
+                objectStorageConfig:
+                  secretName: thanos-objstore-config
+                  secretKey: thanos.yaml
+                service:
+                  annotations:
+                    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+                ingress:
+                  enabled: true
+                  hostname: prom.tms.tangled.safibank.online
+                  annotations:
+                    kubernetes.io/ingress.class: traefik-internal
+            alertmanager:
+              externalConfig: true
+              persistence:
+                enabled: true
+                size: 1Gi
+            exporters:
+              node-exporter:
+                enabled: false
+            blackboxExporter:
+              enabled: false
+            coreDns:
+              enabled: false
+  template:
+    metadata:
+      name: '{{name}}-prometheus'
+    spec:
+      project: dev-infra
+      source:
+        chart: kube-prometheus
+        repoURL: https://charts.bitnami.com/bitnami
+        targetRevision: 8.2.2
+        helm:
+          releaseName: kube-prometheus
+          values: | 
+              {{values.override}}
+          skipCrds: true
+      destination:
+        server: '{{server}}'
+        namespace: monitoring
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+        - CreateNamespace=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: priority-class
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .  
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-priority-class'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
+    spec:
+      project: dev-infra
+      source:
+        repoURL: 'https://github.com/SafiBank/SaFiMono.git'
+        path: devops/argocd/environments/common/infra/priority-class
+        targetRevision: HEAD
+      destination:
+        server: '{{server}}'
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+        - CreateNamespace=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

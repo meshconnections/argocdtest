@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- base/actions-runner-controller.yaml
+- base/actions-runner.yaml
+- base/cert-manager.yaml
+- base/cronjob.yaml
+- base/istio-base.yaml
+- base/istiod.yaml
+#- base/kyverno.yaml
+- base/threatmapper.yaml
+- base/priority-class.yaml
+- base/prometheus-extra.yaml
+- base/prometheus.yaml
+- base/promtail.yaml
+- base/traefik-internal.yaml
+# - base/traefik-external.yaml

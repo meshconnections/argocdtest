@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: actions-runner-controller
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          cluster: apps
+  template:
+    metadata:
+      name: '{{name}}-actions-runner-controller'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
+    spec:
+      project: dev-infra
+      source:
+        repoURL: 'https://github.com/SafiBank/SaFiMono.git'
+        path: devops/argocd/environments/common/infra/actions-runner-controller
+        targetRevision: HEAD
+        plugin:
+          name: helm-argocd-vault-replacer
+      destination:
+        server: '{{server}}'
+        namespace: actions-runner-controller
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+        - CreateNamespace=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

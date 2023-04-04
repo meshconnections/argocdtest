@@ -1,0 +1,59 @@
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: apps-probes
+spec:
+  module: http_2xx
+  prober:
+    url: kube-prometheus-blackbox-exporter.monitoring.svc.cluster.local:19115
+  targets:
+    staticConfig:
+      static:
+      - https://bofe.apps.tangled.safibank.online/health
+      - https://account-manager.apps.tangled.safibank.online/health
+      - https://advanceai-gateway.apps.tangled.safibank.online/health
+      - https://audit-log-manager.apps.tangled.safibank.online/health
+      - https://backoffice-manager.apps.tangled.safibank.online/health
+      - https://card-aggregator.apps.tangled.safibank.online/health
+      - https://card-manager.apps.tangled.safibank.online/health
+      - https://card-transaction-processor-manager.apps.tangled.safibank.online/health
+      - https://communication-history-manager.apps.tangled.safibank.online/health
+      - https://customer-manager.apps.tangled.safibank.online/health
+      - https://digipay-gateway.apps.tangled.safibank.online/health
+      - https://ecpay-gateway.apps.tangled.safibank.online/health
+      - https://engagement-manager.apps.tangled.safibank.online/health
+      - https://euronet-gateway.apps.tangled.safibank.online/health
+      - https://fee-manager.apps.tangled.safibank.online/health
+      - https://genesys-gateway.apps.tangled.safibank.online/health  
+      - https://googleapi-gateway.apps.tangled.safibank.online/health
+      - https://iam-manager.apps.tangled.safibank.online/health      
+      - https://infobip-email-gateway.apps.tangled.safibank.online/health
+      - https://infobip-sms-gateway.apps.tangled.safibank.online/health
+      - https://infobip-viber-gateway.apps.tangled.safibank.online/health
+      - https://jira-gateway.apps.tangled.safibank.online/health
+      - https://loan-manager.apps.tangled.safibank.online/health
+      - https://macrokiosk-email-gateway.apps.tangled.safibank.online/health
+      - https://macrokiosk-sms-gateway.apps.tangled.safibank.online/health
+      - https://meiro-gateway.apps.tangled.safibank.online/health
+      - https://merchants-manager.apps.tangled.safibank.online/health
+      - https://netsuite-gateway.apps.tangled.safibank.online/health
+      - https://ninjavan-gateway.apps.tangled.safibank.online/health
+      - https://output-delivery-status-manager.apps.tangled.safibank.online/health
+      - https://output-manager.apps.tangled.safibank.online/health
+      - https://paynamics-gateway.apps.tangled.safibank.online/health
+      - https://pdf-generator.apps.tangled.safibank.online/health
+      - https://pesonet-gateway.apps.tangled.safibank.online/health      
+      - https://pesonet-sandbox.apps.tangled.safibank.online/health
+      - https://product-manager.apps.tangled.safibank.online/health
+      - https://product-recommendation-manager.apps.tangled.safibank.online/health
+      - https://push-notifications-gateway.apps.tangled.safibank.online/health
+      - https://referral-manager.tangled.safibank.online/health
+      - https://response-message-manager.apps.tangled.safibank.online/health
+      - https://scheduled-transaction-manager.apps.tangled.safibank.online/health
+      - https://slacker-manager.apps.tangled.safibank.online/health
+      - https://statement-manager.apps.tangled.safibank.online/health
+      - https://template-service.apps.tangled.safibank.online/health
+      - https://ticket-manager.apps.tangled.safibank.online/health
+      - https://transaction-categorization-manager.apps.tangled.safibank.online/health
+      - https://transaction-history-manager.apps.tangled.safibank.online/health
+      - https://transaction-processor-manager.apps.tangled.safibank.online/health
