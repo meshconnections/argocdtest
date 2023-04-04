@@ -12,7 +12,7 @@ spec:
     path: devops/monitoring/thanos
     targetRevision: HEAD
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: 'https://35.239.16.55'
     namespace: monitoring
   syncPolicy:
     automated:
