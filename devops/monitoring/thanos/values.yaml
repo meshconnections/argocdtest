@@ -3,7 +3,6 @@ thanos:
     type: GCS
     config:
       bucket: synthos-thanos
-      service_account_json_key: ""
 
   query:
     enabled: true
@@ -11,9 +10,15 @@ thanos:
 
   storegateway:
     enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
 
   bucketweb:
     enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
 
   metrics:
     enabled: true
@@ -22,6 +27,9 @@ thanos:
 
   compactor:
     enabled: true
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
     retentionResolutionRaw: 7d
     retentionResolution5m: 30d
     retentionResolution1h: 90d
