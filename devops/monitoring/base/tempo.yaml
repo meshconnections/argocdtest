@@ -12,7 +12,7 @@ spec:
     path: devops/monitoring
     targetRevision: HEAD
   destination:
-    server: https://172.21.80.5:8081
+    server: https://35.239.16.55
     namespace: observability
   syncPolicy:
     automated:
