@@ -5,18 +5,18 @@ thanos:
       bucket: synthos-thanos
 
   query:
-    stores:
-      # safi-cicd
-      - prom.cicd.safibank.online:80
-    ingress:
-      enabled: true
-      hostname: thanos.monitoring.brave.safibank.online
-      annotations:
-        cert-manager.io/cluster-issuer: zerossl-dns
-        traefik.ingress.kubernetes.io/router.tls: "true"
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        kubernetes.io/ingress.class: traefik-internal
-      tls: true
+    # stores:
+    #   # safi-cicd
+    #   - prom.cicd.safibank.online:80
+    # ingress:
+    #   enabled: true
+    #   hostname: thanos.monitoring.brave.safibank.online
+    #   annotations:
+    #     cert-manager.io/cluster-issuer: zerossl-dns
+    #     traefik.ingress.kubernetes.io/router.tls: "true"
+    #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    #     kubernetes.io/ingress.class: traefik-internal
+    #   tls: true
     replicaLabel: [prometheus_replica]
 
   # bucketweb:
