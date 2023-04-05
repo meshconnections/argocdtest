@@ -1,48 +1,18 @@
 thanos:
-  objstoreConfig: |-
-    type: GCS
-    config:
-      bucket: synthos-thanos
-
+  # Enable components
   query:
-    # stores:
-    #   # safi-cicd
-    #   - prom.cicd.safibank.online:80
-    # ingress:
-    #   enabled: true
-    #   hostname: thanos.monitoring.brave.safibank.online
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: zerossl-dns
-    #     traefik.ingress.kubernetes.io/router.tls: "true"
-    #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    #     kubernetes.io/ingress.class: traefik-internal
-    #   tls: true
-    replicaLabel: [prometheus_replica]
-
-  # bucketweb:
-  #   enabled: true
-    # serviceAccount:
-    #   annotations:
-    #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
-
-  # compactor:
-  #   enabled: true
-  #   retentionResolutionRaw: 7d
-  #   retentionResolution5m: 30d
-  #   retentionResolution1h: 90d
-  #   # serviceAccount:
-  #   #   annotations:
-  #   #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
-  #   persistence:
-  #     size: 30Gi
-
-  # storegateway:
-  #   enabled: true
-  #   # serviceAccount:
-  #   #   annotations:
-  #   #     iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
-
-  metrics:
     enabled: true
-    serviceMonitor:
-      enabled: true
+  storegateway:
+    enabled: true
+
+  # Object storage configuration (not used in this example)
+  objstoreConfig: ""
+
+  # Query configuration
+  query:
+    frontend:
+      replicaCount: 1
+
+  # Store gateway configuration
+  storegateway:
+    selectors:
