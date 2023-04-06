@@ -1,18 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: observability-set
+  name: monitoring-set
   namespace: argocd
 spec:
   generators:
-    - name: observability
+    - name: monitoring
       list:
         - name: grafana
           path: devops/monitoring/grafana
           namespace: monitoring
-        - name: grafana-dash
-          path: devops/monitoring/grafana-dashboards
+        - name: kibana
+          path: devops/monitoring/kibana
           namespace: monitoring
+      vars:
+        - name: name
+          fieldRef:
+            fieldPath: metadata.name
+        - name: path
+          value: "{{item.path}}"
+        - name: namespace
+          value: "{{item.namespace}}"
   template:
     metadata:
       name: "{{name}}"
