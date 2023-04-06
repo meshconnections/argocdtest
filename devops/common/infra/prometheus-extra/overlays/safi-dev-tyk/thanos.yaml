@@ -1,3 +1,0 @@
-type: GCS
-config:
-  bucket: "safi-thanos-dev"
