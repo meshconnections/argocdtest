@@ -1,7 +1,8 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: monitoring-set
+  name: observability
   namespace: argocd
 spec:
   generators:
@@ -10,8 +11,8 @@ spec:
         - name: grafana
           path: devops/monitoring/grafana
           namespace: monitoring
-        - name: kibana
-          path: devops/monitoring/kibana
+        - name: grafana-dashboard
+          path: devops/monitoring/grafana-dashboard
           namespace: monitoring
   template:
     metadata:
@@ -37,3 +38,18 @@ spec:
             duration: 5s
             factor: 2
             maxDuration: 3m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: observability
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+    - '*'
