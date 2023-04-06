@@ -4,7 +4,7 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  name: observability
+  name: observability-overview
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
