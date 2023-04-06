@@ -16,7 +16,7 @@ spec:
           namespace: monitoring
   template:
     metadata:
-      name: "appset-{{name}}"
+      name: "{{name}}"
       namespace: argocd
     spec:
       project: observability
