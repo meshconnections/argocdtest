@@ -1,7 +1,10 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: observability
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -9,19 +12,34 @@ spec:
   project: observability
   source:
     repoURL: 'https://github.com/meshconnections/argocdtest.git'
-    path: devops/monitoring/grafana
+    path: devops/monitoring
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: monitoring
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
     retry:
       limit: 5
       backoff:
         duration: 5s
         factor: 2
         maxDuration: 3m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: observability
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+    - '*'
