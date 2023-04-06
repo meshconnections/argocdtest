@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- base/grafana-dashboards.yaml
-- base/grafana.yaml
+# - base/grafana-dashboards.yaml
+# - base/grafana.yaml
 # - base/loki.yaml
 # - base/tempo.yaml
 # - base/thanos.yaml
