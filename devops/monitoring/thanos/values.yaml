@@ -31,7 +31,7 @@ thanos:
       annotations:
         iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com
 
-  metrics:
-    enabled: true
-    serviceMonitor:
-      enabled: true
+  # metrics:
+  #   enabled: true
+  #   serviceMonitor:
+  #     enabled: true
