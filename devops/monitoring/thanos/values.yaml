@@ -1,9 +1,10 @@
 thanos:
-  objstoreConfig: |-
-    type: GCS
-    config:
-      bucket: synthos-thanos
-    replicaLabel: [prometheus_replica]
+  # objstoreConfig: |-
+  #   type: GCS
+  #   config:
+  #     bucket: synthos-thanos
+  #   replicaLabel: [prometheus_replica]
+  objstoreConfig: []
 
   bucketweb:
     enabled: true
