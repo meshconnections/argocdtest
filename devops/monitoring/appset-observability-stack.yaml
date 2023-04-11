@@ -11,9 +11,15 @@ spec:
         - name: grafana
           path: devops/monitoring/grafana
           namespace: monitoring
+          server: 'https://kubernetes.default.svc'
         - name: grafana-dashboards
           path: devops/monitoring/grafana-dashboards
           namespace: monitoring
+          server: 'https://kubernetes.default.svc'
+        - name: thanos
+          path: devops/monitoring/thanos
+          namespace: monitoring
+          server: 'https://34.70.26.235'
   template:
     metadata:
       name: "{{name}}"
@@ -25,7 +31,7 @@ spec:
         path: "{{path}}"
         targetRevision: HEAD
       destination:
-        server: 'https://kubernetes.default.svc'
+        server: "{{server}}"
         namespace: "{{namespace}}"
       syncPolicy:
         automated:
