@@ -4,10 +4,13 @@ thanos:
   #   config:
   #     bucket: synthos-thanos
   #   replicaLabel: [prometheus_replica]
-  objstoreConfig: []
+  objstoreConfig:
+    type: FILESYSTEM
+    config:
+      directory: ""
 
   bucketweb:
-    enabled: true
+    enabled: 
     serviceAccount:
       annotations:
         iam.gke.io/gcp-service-account: observabitliy-sa@idg-devops.iam.gserviceaccount.com

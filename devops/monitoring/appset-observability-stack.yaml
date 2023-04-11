@@ -16,10 +16,10 @@ spec:
           path: devops/monitoring/grafana-dashboards
           namespace: monitoring
           server: 'https://34.70.26.235'
-        # - name: thanos
-        #   path: devops/monitoring/thanos
-        #   namespace: monitoring
-        #   server: 'https://34.70.26.235'
+        - name: thanos
+          path: devops/monitoring/thanos
+          namespace: monitoring
+          server: 'https://34.70.26.235'
   template:
     metadata:
       name: "{{name}}"
