@@ -66,11 +66,11 @@ grafana:
       limits:
         cpu: 100m
         memory: 128Mi
-    # dashboards:
-    #   - enabled: true
-    #     label: grafana_dashboard
-    #     folder: /tmp/dashboards
-    #     searchNamespace: monitoring
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      folder: /tmp/dashboards
+      searchNamespace: monitoring
     #     provider:
     #       folder: "DevOps"
     #   - enabled: true
