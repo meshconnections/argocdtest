@@ -84,27 +84,21 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        - name: SRE
-          orgId: 1
-          folder: SRE
+        - name: 'SRE'
+          folder: 'SRE'
           type: file
           disableDeletion: true
-          editable: true
           options:
             path: /tmp/dashboards/SRE
-        - name: DevOps
-          orgId: 1
-          folder: DevOps
+        - name: 'DevOps'
+          folder: 'DevOps'
           type: file
           disableDeletion: true
-          editable: true
           options:
             path: /tmp/dashboards/DevOps
-        - name: Network
-          orgId: 1
-          folder: Network
+        - name: 'Network'
+          folder: 'Network'
           type: file
           disableDeletion: true
-          editable: true
           options:
             path: /tmp/dashboards/Network
