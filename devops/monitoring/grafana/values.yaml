@@ -71,5 +71,5 @@ grafana:
       label: grafana_dashboard
       folder: /tmp/dashboards
       searchNamespace: monitoring
-    provider:
-      folder: "SRE"
+      provider:
+        folder: "SRE"
