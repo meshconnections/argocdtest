@@ -24,28 +24,6 @@ grafana:
 
   adminUser: admin
   adminPassword: D3V0P$monitoring
-
-# # Use an existing secret for the admin user.
-#   admin:
-#     ## Name of the secret. Can be templated.
-#     existingSecret: ""
-#     userKey: admin-user
-#     passwordKey: admin-password
-
-
-  # ingress:
-  #   enabled: true
-  #   hosts:
-  #     - grafana.example.com
-  #   annotations:
-  #     cert-manager.io/cluster-issuer: zerossl-dns
-  #     traefik.ingress.kubernetes.io/router.tls: "true"
-  #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-  #     kubernetes.io/ingress.class: traefik-internal
-  #   tls:
-  #     - secretName: grafana.monitoring.brave.safibank.online-tls
-  #       hosts:
-  #         - grafana.monitoring.brave.safibank.online
   
   datasources:
     datasources.yaml:
@@ -93,3 +71,5 @@ grafana:
       label: grafana_dashboard
       folder: /tmp/dashboards
       searchNamespace: monitoring
+    provider:
+      folder: "SRE"
