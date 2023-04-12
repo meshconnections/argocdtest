@@ -90,4 +90,4 @@ grafana:
         folder: /tmp/dashboards
         searchNamespace: monitoring
         provider:
-          folder: Test
+          folder: "Test"
