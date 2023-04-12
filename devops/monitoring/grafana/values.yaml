@@ -91,7 +91,7 @@ grafana:
           disableDeletion: true
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/SRE
+            path: /tmp/dashboards/SRE
         - name: DevOps
           orgId: 1
           folder: DevOps
@@ -99,7 +99,7 @@ grafana:
           disableDeletion: true
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/DevOps
+            path: /tmp/dashboards/DevOps
         - name: Network
           orgId: 1
           folder: Network
@@ -107,4 +107,4 @@ grafana:
           disableDeletion: true
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/Network
+            path: /tmp/dashboards/Network

@@ -8,6 +8,8 @@ metadata:
   name: {{ $path | replace  (printf "dashboards/%s/" $folder) "" | replace ".json" "" }}
   labels:
     folder: {{ $folder | quote }}
+  annotations:
+    k8s-sidecar-target-directory: "/tmp/dashboards/DevOps"
 {{ toYaml $.Values.labels | indent 4 }}
 data:
   {{ $path | replace (printf "dashboards/%s/" $folder) "" }}: |-
