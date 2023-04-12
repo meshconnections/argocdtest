@@ -84,21 +84,23 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
+        - name: 'Devops'
+          orgId: 1
+          folder: 'Devops'
+          type: file
+          disableDeletion: false
+          allowUiUpdates: false
+          updateIntervalSeconds: 30
+          options:
+            foldersFromFilesStructure: false
+            path: /tmp/dashboards/Devops
         - name: 'SRE'
+          orgId: 1
           folder: 'SRE'
           type: file
-          disableDeletion: true
+          disableDeletion: false
+          allowUiUpdates: false
+          updateIntervalSeconds: 30
           options:
+            foldersFromFilesStructure: false
             path: /tmp/dashboards/SRE
-        - name: 'DevOps'
-          folder: 'DevOps'
-          type: file
-          disableDeletion: true
-          options:
-            path: /tmp/dashboards/DevOps
-        - name: 'Network'
-          folder: 'Network'
-          type: file
-          disableDeletion: true
-          options:
-            path: /tmp/dashboards/Network
