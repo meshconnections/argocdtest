@@ -68,11 +68,16 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      label: grafana_dashboard
-      folder: /tmp/dashboards
-      searchNamespace: monitoring
-      provider:
-        folder: "FOl Justin"
+      - label: grafana_dashboard
+        folder: /tmp/dashboards
+        searchNamespace: monitoring
+        provider:
+          folder: "FOl Justin"
+      - label: test
+        folder: /tmp/dashboards/test
+        searchNamespace: monitoring
+        provider:
+          folder: "test"
     #   - enabled: true
     #     label: grafana_dashboard
     #     folder: /tmp/dashboards
@@ -85,7 +90,6 @@ grafana:
       apiVersion: 1
       providers:
         - name: 'Devops'
-          orgId: 1
           folder: 'Devops'
           type: file
           disableDeletion: false
@@ -95,7 +99,6 @@ grafana:
             foldersFromFilesStructure: true
             path: /var/lib/grafana/Devops
         - name: 'SRE'
-          orgId: 1
           folder: 'SRE'
           type: file
           disableDeletion: false
