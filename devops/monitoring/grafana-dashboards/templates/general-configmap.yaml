@@ -7,7 +7,7 @@ kind: ConfigMap
 metadata:
   name: {{ $path | replace printf "dashboards/%s/" $folder | replace ".json" "" }}
   labels:
-    {{- $folder | nindent 4 }}
+    {{- printf "%s" $folder | nindent 4 }}
 {{ toYaml $.Values.labels | indent 4 }}
 data:
   {{ $path | replace printf "dashboards/%s/" $folder}}: |-
