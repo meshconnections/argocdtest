@@ -80,23 +80,19 @@ grafana:
     #     provider:
     #       folder: "Apps"
 
-  dashboardProviders:
-   dashboardproviders.yaml:
-     apiVersion: 1
-     providers:
-     - name: 'Fol Justin'
-       orgId: 1
-       folder: 'Fol Justin'
-       type: file
-       disableDeletion: false
-       editable: true
-       options:
-         path: /tmp/dashboards/a
-     - name: 'Lacsina'
-       orgId: 1
-       folder: 'Lacsina'
-       type: file
-       disableDeletion: false
-       editable: true
-       options:
-         path: /tmp/dashboards/b
+dashboardProviders:
+  - name: "SRE"
+    folder: "/grafana/dashboards/sre"
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards/sre
+  - name: "DevOps"
+    folder: "/grafana/dashboards/devops"
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards/devops
+  - name: "Network"
+    folder: "/grafana/dashboards/network"
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards/network
