@@ -67,9 +67,27 @@ grafana:
         cpu: 100m
         memory: 128Mi
     dashboards:
-      enabled: true
-      label: grafana_dashboard
-      folder: /tmp/dashboards
-      searchNamespace: monitoring
-      provider:
-        folder: "SRE"
+      - enabled: true
+        label: "General"
+        folder: /tmp/dashboards
+        searchNamespace: monitoring
+        provider:
+          folder: "General"
+      - enabled: true
+        label: "DevOps"
+        folder: /tmp/dashboards
+        searchNamespace: monitoring
+        provider:
+          folder: "DevOps"
+      - enabled: true
+        label: "Apps"
+        folder: /tmp/dashboards
+        searchNamespace: monitoring
+        provider:
+          folder: "Apps"
+      - enabled: true
+        label: grafana_dashboard
+        folder: /tmp/dashboards
+        searchNamespace: monitoring
+        provider:
+          folder: Test
