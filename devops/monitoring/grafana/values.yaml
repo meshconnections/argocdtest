@@ -68,22 +68,8 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      - label: grafana_dashboard
-        folder: /tmp/dashboards
-        searchNamespace: monitoring
-        provider:
-          folder: "FOl Justin"
-      - label: test
-        folder: /tmp/dashboards/test
-        searchNamespace: monitoring
-        provider:
-          folder: "test"
-    #   - enabled: true
-    #     label: grafana_dashboard
-    #     folder: /tmp/dashboards
-    #     searchNamespace: monitoring
-    #     provider:
-    #       folder: "Apps"
+      label: grafana_dashboards
+      folder: /var/lib/grafana/dashboards
 
   dashboardProviders:
     dashboardproviders.yaml:
@@ -96,8 +82,7 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            foldersFromFilesStructure: true
-            path: /var/lib/grafana/Devops
+            path: /var/lib/grafana/dashboards/Devops
         - name: 'SRE'
           folder: 'SRE'
           type: file
@@ -105,5 +90,4 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            foldersFromFilesStructure: true
-            path: /var/lib/grafana/SRE
+            path: /var/lib/grafana/dashboards/SRE
