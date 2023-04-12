@@ -69,10 +69,10 @@ grafana:
     dashboards:
       enabled: true
       label: grafana_dashboard
-      #folder: /tmp/dashboards
+      folder: /tmp/dashboards
       searchNamespace: monitoring
-    #     provider:
-    #       folder: "DevOps"
+        provider:
+          folder: "FOl Justin"
     #   - enabled: true
     #     label: grafana_dashboard
     #     folder: /tmp/dashboards
