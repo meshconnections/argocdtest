@@ -66,16 +66,37 @@ grafana:
       limits:
         cpu: 100m
         memory: 128Mi
-    dashboards:
-      - enabled: true
-        label: grafana_dashboard
-        folder: /tmp/dashboards
-        searchNamespace: monitoring
-        provider:
-          folder: "DevOps"
-      - enabled: true
-        label: grafana_dashboard
-        folder: /tmp/dashboards
-        searchNamespace: monitoring
-        provider:
-          folder: "Apps"
+    # dashboards:
+    #   - enabled: true
+    #     label: grafana_dashboard
+    #     folder: /tmp/dashboards
+    #     searchNamespace: monitoring
+    #     provider:
+    #       folder: "DevOps"
+    #   - enabled: true
+    #     label: grafana_dashboard
+    #     folder: /tmp/dashboards
+    #     searchNamespace: monitoring
+    #     provider:
+    #       folder: "Apps"
+
+  dashboardProviders:
+   dashboardproviders.yaml:
+     apiVersion: 1
+     providers:
+     - name: 'Fol Justin'
+       orgId: 1
+       folder: 'Fol Justin'
+       type: file
+       disableDeletion: false
+       editable: true
+       options:
+         path: /tmp/dashboards/a
+     - name: 'Lacsina'
+       orgId: 1
+       folder: 'Lacsina'
+       type: file
+       disableDeletion: false
+       editable: true
+       options:
+         path: /tmp/dashboards/b
