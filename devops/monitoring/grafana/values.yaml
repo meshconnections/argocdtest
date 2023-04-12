@@ -71,8 +71,8 @@ grafana:
       label: grafana_dashboard
       folder: /tmp/dashboards
       searchNamespace: monitoring
-        provider:
-          folder: "FOl Justin"
+      provider:
+        folder: "FOl Justin"
     #   - enabled: true
     #     label: grafana_dashboard
     #     folder: /tmp/dashboards
