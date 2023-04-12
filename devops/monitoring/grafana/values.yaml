@@ -92,7 +92,7 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            foldersFromFilesStructure: false
+            foldersFromFilesStructure: true
             path: /var/lib/grafana/Devops
         - name: 'SRE'
           orgId: 1
@@ -102,5 +102,5 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            foldersFromFilesStructure: false
+            foldersFromFilesStructure: true
             path: /var/lib/grafana/SRE
