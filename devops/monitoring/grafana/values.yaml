@@ -72,7 +72,7 @@ grafana:
       folder: /tmp/dashboards
       searchNamespace: monitoring
       provider:
-        folder: "DevOps" "SRE" "TEST"
+        folder: "DevOps"
       # - enabled: true
       #   label: grafana_dashboard
       #   folder: /tmp/dashboards
