@@ -80,19 +80,31 @@ grafana:
     #     provider:
     #       folder: "Apps"
 
-dashboardProviders:
-  - name: "SRE"
-    folder: "/grafana/dashboards/sre"
-    type: file
-    options:
-      path: /var/lib/grafana/dashboards/sre
-  - name: "DevOps"
-    folder: "/grafana/dashboards/devops"
-    type: file
-    options:
-      path: /var/lib/grafana/dashboards/devops
-  - name: "Network"
-    folder: "/grafana/dashboards/network"
-    type: file
-    options:
-      path: /var/lib/grafana/dashboards/network
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: SRE
+          orgId: 1
+          folder: SRE
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/SRE
+        - name: DevOps
+          orgId: 1
+          folder: DevOps
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/DevOps
+        - name: Network
+          orgId: 1
+          folder: Network
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/Network
