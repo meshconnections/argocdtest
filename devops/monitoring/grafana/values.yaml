@@ -72,8 +72,8 @@ grafana:
       folder: /tmp/dashboards
       searchNamespace: monitoring
         provider:
-          foldersFromFilesStructure: true
-      #   folder: "Fol Justin"
+          #foldersFromFilesStructure: true
+          folder: "Fol Justin"
 
   dashboardProviders:
     dashboardproviders.yaml:
