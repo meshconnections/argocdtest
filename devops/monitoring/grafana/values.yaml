@@ -68,13 +68,12 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      foldersFromFilesStructure: true
       #defaultFolderName: "SRE", "Devops"
       # label: grafana_dashboard
       # folder: /tmp/dashboards
       # searchNamespace: monitoring
-      # provider:
-      #   #foldersFromFilesStructure: true
+      provider:
+        #foldersFromFilesStructure: true
       #   folder: "Fol Justin"
 
   extraVolumeMounts:
