@@ -85,7 +85,7 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            path: /tmp/dashboards
+            path: /tmp/dashboards/Devops
         - name: 'SRE'
           folder: 'SRE'
           type: file
@@ -93,4 +93,4 @@ grafana:
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
-            path: /tmp/dashboards
+            path: /tmp/dashboards/SRE
