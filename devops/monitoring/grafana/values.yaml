@@ -68,8 +68,8 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      #label: grafana_dashboard
-      #searchNamespace: monitoring
+      label: grafana_dashboard
+      searchNamespace: monitoring
       #folder: /tmp/dashboards/Test
       #provider:
       #  folder: "Test"
