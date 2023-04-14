@@ -69,9 +69,10 @@ grafana:
     dashboards:
       enabled: true
       label: grafana_dashboard
-      #folder: /tmp/dashboards/foljustin
+      folder: /tmp/dashboards
       searchNamespace: monitoring
-      # provider:
+        provider:
+          foldersFromFilesStructure: true
       #   folder: "Fol Justin"
 
   dashboardProviders:
