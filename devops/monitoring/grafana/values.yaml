@@ -68,35 +68,34 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      #defaultFolderName: "SRE", "Devops"
-      # label: grafana_dashboard
-      # folder: /tmp/dashboards
-      # searchNamespace: monitoring
+      label: grafana_dashboard
+      searchNamespace: monitoring
       provider:
         foldersFromFilesStructure: true
-      #   folder: "Fol Justin"
 
   extraVolumeMounts:
-    - name: config-volume
+    - name: SRE
       mountPath: /tmp/dashboards/SRE
+    - name: Devops
+      mountPath: /tmp/dashboards/Devops
 
-  # dashboardProviders:
-  #   dashboardproviders.yaml:
-  #     apiVersion: 1
-  #     providers:
-  #       - name: 'Devops'
-  #         folder: 'Devops'
-  #         type: file
-  #         disableDeletion: false
-  #         allowUiUpdates: false
-  #         updateIntervalSeconds: 30
-  #         options:
-  #           path: /tmp/dashboards/Devops
-  #       - name: 'SRE'
-  #         folder: 'SRE'
-  #         type: file
-  #         disableDeletion: false
-  #         allowUiUpdates: false
-  #         updateIntervalSeconds: 30
-  #         options:
-  #           path: /tmp/dashboards/SRE
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'Devops'
+          folder: 'Devops'
+          type: file
+          disableDeletion: false
+          allowUiUpdates: false
+          updateIntervalSeconds: 30
+          options:
+            path: /tmp/dashboards/Devops
+        - name: 'SRE'
+          folder: 'SRE'
+          type: file
+          disableDeletion: false
+          allowUiUpdates: false
+          updateIntervalSeconds: 30
+          options:
+            path: /tmp/dashboards/SRE
