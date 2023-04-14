@@ -74,9 +74,9 @@ grafana:
         foldersFromFilesStructure: true
 
   extraVolumeMounts:
-    - name: SRE
+    - name: sre-dir
       mountPath: /tmp/dashboards/SRE
-    - name: Devops
+    - name: devops-dir
       mountPath: /tmp/dashboards/Devops
 
   dashboardProviders:
