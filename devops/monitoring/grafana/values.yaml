@@ -73,7 +73,7 @@ grafana:
       # folder: /tmp/dashboards
       # searchNamespace: monitoring
       provider:
-        #foldersFromFilesStructure: true
+        foldersFromFilesStructure: true
       #   folder: "Fol Justin"
 
   extraVolumeMounts:
