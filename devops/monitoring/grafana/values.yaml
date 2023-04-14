@@ -74,11 +74,11 @@ grafana:
       provider:
        folder: "Test"
 
-  extraVolumeMounts:
-    - name: sre-dir
-      mountPath: /tmp/dashboards/SRE
-    - name: devops-dir
-      mountPath: /tmp/dashboards/Devops
+  # extraVolumeMounts:
+  #   - name: sre-dir
+  #     mountPath: /tmp/dashboards/SRE
+  #   - name: devops-dir
+  #     mountPath: /tmp/dashboards/Devops
 
   dashboardProviders:
     dashboardproviders.yaml:
