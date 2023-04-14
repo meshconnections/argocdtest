@@ -80,13 +80,14 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        foldersFromFilesStructure: true
+        
         - name: 'Devops'
           folder: 'Devops'
           type: file
           disableDeletion: false
           allowUiUpdates: false
           updateIntervalSeconds: 30
+          foldersFromFilesStructure: true
           # options:
           #   path: /tmp/dashboards/Devops
         - name: 'SRE'
@@ -95,5 +96,6 @@ grafana:
           disableDeletion: false
           allowUiUpdates: false
           updateIntervalSeconds: 30
+          foldersFromFilesStructure: true
           # options:
           #   path: /tmp/dashboards/SRE
