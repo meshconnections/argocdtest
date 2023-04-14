@@ -68,16 +68,16 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      - label: grafana_dashboard
-        folder: /tmp/dashboards/foljustin
-        searchNamespace: monitoring
-        provider:
-          folder: "Fol Justin"
-      - label: grafana_dashboard
-        folder: /tmp/dashboards/sre
-        searchNamespace: monitoring
-        provider:
-          folder: "Fol sre"
+      # - label: grafana_dashboard
+      #   folder: /tmp/dashboards/foljustin
+      #   searchNamespace: monitoring
+      #   provider:
+      #     folder: "Fol Justin"
+      # - label: grafana_dashboard
+      #   folder: /tmp/dashboards/sre
+      #   searchNamespace: monitoring
+      #   provider:
+      #     folder: "Fol sre"
 
   dashboardProviders:
     dashboardproviders.yaml:
