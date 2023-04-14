@@ -71,8 +71,8 @@ grafana:
       label: grafana_dashboard
       searchNamespace: monitoring
       folder: /tmp/dashboards
-      # provider:
-      #   foldersFromFilesStructure: true
+      provider:
+        folder: "Test"
 
   extraVolumeMounts:
     - name: sre-dir
