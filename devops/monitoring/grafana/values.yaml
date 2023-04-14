@@ -68,12 +68,12 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-      label: grafana_dashboard
-      folder: /tmp/dashboards
-      searchNamespace: monitoring
-      provider:
-        #foldersFromFilesStructure: true
-        folder: "Fol Justin"
+      # label: grafana_dashboard
+      # folder: /tmp/dashboards
+      # searchNamespace: monitoring
+      # provider:
+      #   #foldersFromFilesStructure: true
+      #   folder: "Fol Justin"
 
   dashboardProviders:
     dashboardproviders.yaml:
