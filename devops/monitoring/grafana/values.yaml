@@ -76,6 +76,10 @@ grafana:
       #   #foldersFromFilesStructure: true
       #   folder: "Fol Justin"
 
+  extraContainerVolumes:
+  - /tmp/dashboards/SRE
+  - /tmp/dashboards/Devops
+
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
