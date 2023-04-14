@@ -76,9 +76,9 @@ grafana:
       #   #foldersFromFilesStructure: true
       #   folder: "Fol Justin"
 
-  extraContainerVolumes:
-  - /tmp/dashboards/SRE
-  - /tmp/dashboards/Devops
+  extraVolumeMounts:
+    - name: config-volume
+      mountPath: /tmp/dashboards/SRE
 
   dashboardProviders:
     dashboardproviders.yaml:
