@@ -1,32 +1,32 @@
-# {{ $root := . }}
-# {{ $folder := "DevOps" }}
-# {{ range $path, $_ :=  .Files.Glob  (printf "dashboards/%s/**.json" $folder) }}
-# {{- with $root }}
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: {{ $path | replace  (printf "dashboards/%s/" $folder) "" | replace ".json" "" }}
-#   labels:
-#     folder: {{ $folder | quote }}
-#   annotations:
-#     k8s-sidecar-target-directory: "/tmp/dashboards/Devops"
-# {{ toYaml $.Values.labels | indent 4 }}
-# data:
-#   {{ $path | replace (printf "dashboards/%s/" $folder) "" }}: |-
-# {{ .Files.Get $path | indent 4 }}
-# ---
-# {{- end -}}
-# {{- end -}}
-# {{- range $key, $value := .Values.importFromValue }}
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: {{ $key }}
-#   labels:
-#     {{- include "grafana-dashboards.labels" $ | nindent 4 }}
-# {{ toYaml $.Values.labels | indent 4 }}
-# data:
-#   {{ $key }}.json: |-
-#     {{ $value }}
-# ---
-# {{- end }}
+{{ $root := . }}
+{{ $folder := "DevOps" }}
+{{ range $path, $_ :=  .Files.Glob  (printf "dashboards/%s/**.json" $folder) }}
+{{- with $root }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $path | replace  (printf "dashboards/%s/" $folder) "" | replace ".json" "" }}
+  labels:
+    folder: {{ $folder | quote }}
+  annotations:
+    k8s-sidecar-target-directory: "/tmp/dashboards/Devops"
+{{ toYaml $.Values.labels | indent 4 }}
+data:
+  {{ $path | replace (printf "dashboards/%s/" $folder) "" }}: |-
+{{ .Files.Get $path | indent 4 }}
+---
+{{- end -}}
+{{- end -}}
+{{- range $key, $value := .Values.importFromValue }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $key }}
+  labels:
+    {{- include "grafana-dashboards.labels" $ | nindent 4 }}
+{{ toYaml $.Values.labels | indent 4 }}
+data:
+  {{ $key }}.json: |-
+    {{ $value }}
+---
+{{- end }}
