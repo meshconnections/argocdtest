@@ -81,15 +81,15 @@ grafana:
       apiVersion: 1
       providers:
         
-        - name: 'Devops'
-          folder: 'Devops'
-          type: file
-          disableDeletion: false
-          allowUiUpdates: false
-          updateIntervalSeconds: 30
-          options:
-            foldersFromFilesStructure: true
-            #path: /tmp/dashboards/Devops
+        # - name: 'Devops'
+        #   folder: 'Devops'
+        #   type: file
+        #   disableDeletion: false
+        #   allowUiUpdates: false
+        #   updateIntervalSeconds: 30
+        #   options:
+        #     foldersFromFilesStructure: true
+        #     #path: /tmp/dashboards/Devops
         - name: 'SRE'
           folder: 'SRE'
           type: file
