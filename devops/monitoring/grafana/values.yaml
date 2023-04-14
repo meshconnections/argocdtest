@@ -68,6 +68,7 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
+      foldersFromFilesStructure: true
       #defaultFolderName: "SRE", "Devops"
       # label: grafana_dashboard
       # folder: /tmp/dashboards
