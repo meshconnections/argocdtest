@@ -91,11 +91,11 @@ grafana:
         #     foldersFromFilesStructure: true
         #     #path: /tmp/dashboards/Devops
         - name: 'SRE'
-          folder: 'SRE'
+          #folder: 'SRE'
           type: file
           disableDeletion: false
           allowUiUpdates: false
           updateIntervalSeconds: 30
           options:
             foldersFromFilesStructure: true
-            #path: /tmp/dashboards/SRE
+            path: /tmp/dashboards/SRE
