@@ -70,9 +70,9 @@ grafana:
       enabled: true
       label: grafana_dashboard
       searchNamespace: monitoring
-      #folder: /tmp/dashboards/Test
-      #provider:
-      #  folder: "Test"
+      folder: /tmp/dashboards/Test
+      provider:
+       folder: "Test"
 
   extraVolumeMounts:
     - name: sre-dir
