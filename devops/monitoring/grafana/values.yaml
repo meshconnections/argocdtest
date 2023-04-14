@@ -87,15 +87,15 @@ grafana:
           disableDeletion: false
           allowUiUpdates: false
           updateIntervalSeconds: 30
-          foldersFromFilesStructure: true
-          # options:
-          #   path: /tmp/dashboards/Devops
+          options:
+            foldersFromFilesStructure: true
+            #path: /tmp/dashboards/Devops
         - name: 'SRE'
           folder: 'SRE'
           type: file
           disableDeletion: false
           allowUiUpdates: false
           updateIntervalSeconds: 30
-          foldersFromFilesStructure: true
-          # options:
-          #   path: /tmp/dashboards/SRE
+          options:
+            foldersFromFilesStructure: true
+            #path: /tmp/dashboards/SRE
