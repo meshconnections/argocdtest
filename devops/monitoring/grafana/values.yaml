@@ -61,13 +61,13 @@ grafana:
       root_url: https://grafana.monitoring.example.com
 
 # Enables the cluster wide search for dashboards and adds/updates/deletes them in grafana
-  # sidecar:
-  #   resources:
-  #     limits:
-  #       cpu: 100m
-  #       memory: 128Mi
-  #   dashboards:
-  #     enabled: true
+  sidecar:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    dashboards:
+      enabled: true
   #     label: grafana_dashboard
   #     searchNamespace: monitoring
   #     folder: /tmp/dashboards
