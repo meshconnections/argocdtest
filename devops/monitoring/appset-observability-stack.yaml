@@ -11,11 +11,11 @@ spec:
         - name: grafana
           path: devops/monitoring/grafana
           namespace: monitoring
-          server: 'https://34.70.26.235'
+          server: 'https://kubernetes.svc.cluster.local'
         - name: grafana-dashboards
           path: devops/monitoring/grafana-dashboards
           namespace: monitoring
-          server: 'https://34.70.26.235'
+          server: 'https://kubernetes.svc.cluster.local'
         - name: thanos
           path: devops/monitoring/thanos
           namespace: monitoring
