@@ -80,23 +80,23 @@ grafana:
   #   - name: devops-dir
   #     mountPath: /tmp/dashboards/Devops
 
-  dashboardProviders:
-    dashboardproviders.yaml:
-      apiVersion: 1
-      providers:
-        - name: 'Devops'
-          folder: 'Devops'
-          type: file
-          disableDeletion: false
-          allowUiUpdates: false
-          updateIntervalSeconds: 30
-          options:
-            path: /tmp/dashboards/Devops
-        - name: 'SRE'
-          folder: 'SRE'
-          type: file
-          disableDeletion: false
-          allowUiUpdates: false
-          updateIntervalSeconds: 30
-          options:
-            path: /tmp/dashboards/SRE
+  # dashboardProviders:
+  #   dashboardproviders.yaml:
+  #     apiVersion: 1
+  #     providers:
+  #       - name: 'Devops'
+  #         folder: 'Devops'
+  #         type: file
+  #         disableDeletion: false
+  #         allowUiUpdates: false
+  #         updateIntervalSeconds: 30
+  #         options:
+  #           path: /tmp/dashboards/Devops
+  #       - name: 'SRE'
+  #         folder: 'SRE'
+  #         type: file
+  #         disableDeletion: false
+  #         allowUiUpdates: false
+  #         updateIntervalSeconds: 30
+  #         options:
+  #           path: /tmp/dashboards/SRE
