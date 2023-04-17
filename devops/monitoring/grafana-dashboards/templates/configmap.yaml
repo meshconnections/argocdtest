@@ -8,8 +8,14 @@ metadata:
   labels:
     {{- include "grafana-dashboards.labels" . | nindent 4 }}
 {{ toYaml $.Values.labels | indent 4 }}
-  # annotations:
-  #   k8s-sidecar-target-directory: "/tmp/dashboards/Devops"
+{{ $jsonData := .Files.Get $path | fromJson }}
+{{- $annotations := $jsonData.annotations -}}
+{{- if hasKey $jsonData "annotations" }}
+  {{- if hasKey $annotations "dashboard_folder" }}
+  annotations:
+    dashboard_folder: {{ index $annotations "dashboard_folder" }}
+  {{- end }}
+{{- end }}
 data:
   {{ $path | replace "dashboards/" ""}}: |-
 {{ .Files.Get $path | indent 4 }}

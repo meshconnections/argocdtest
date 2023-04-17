@@ -3,7 +3,6 @@ grafana:
   #   annotations:
   #     iam.gke.io/gcp-service-account: sa-bigquery@<project>gserviceaccount.com
 
-# Whether to create test-related resources (default - true)
   testFramework:
     enabled: false
 
@@ -12,7 +11,6 @@ grafana:
       cpu: 100m
       memory: 128Mi
 
-# busybox init container
   initChownData:
     resources:
       limits:
@@ -24,7 +22,7 @@ grafana:
 
   adminUser: admin
   adminPassword: D3V0P$monitoring
-  
+
   datasources:
     datasources.yaml:
       apiVersion: 1
@@ -60,7 +58,7 @@ grafana:
     server:
       root_url: https://grafana.monitoring.example.com
 
-# Enables the cluster wide search for dashboards and adds/updates/deletes them in grafana
+  # Enables the cluster wide search for dashboards and adds/updates/deletes them in grafana
   sidecar:
     resources:
       limits:
@@ -68,35 +66,19 @@ grafana:
         memory: 128Mi
     dashboards:
       enabled: true
-  #     label: grafana_dashboard
-  #     searchNamespace: monitoring
-  #     folder: /tmp/dashboards
-  #     provider:
-  #      folder: "Test"
+      label: grafana_dashboard
+      labelValue: "true"
+      folderAnnotation: dashboard_folder
+      # searchNamespace: monitoring
+      folder: /var/lib/grafana/dashboards/
+      watchMethod: WATCH
+      provider:
+        allowUiUpdates: true
+        foldersFromFilesStructure: true
+        updateIntervalSeconds: 30
 
   # extraVolumeMounts:
   #   - name: sre-dir
   #     mountPath: /tmp/dashboards/SRE
   #   - name: devops-dir
   #     mountPath: /tmp/dashboards/Devops
-
-  # dashboardProviders:
-  #   dashboardproviders.yaml:
-  #     apiVersion: 1
-  #     providers:
-  #       - name: 'Devops'
-  #         folder: 'Devops'
-  #         type: file
-  #         disableDeletion: false
-  #         allowUiUpdates: false
-  #         updateIntervalSeconds: 30
-  #         options:
-  #           path: /tmp/dashboards/Devops
-  #       - name: 'SRE'
-  #         folder: 'SRE'
-  #         type: file
-  #         disableDeletion: false
-  #         allowUiUpdates: false
-  #         updateIntervalSeconds: 30
-  #         options:
-  #           path: /tmp/dashboards/SRE
